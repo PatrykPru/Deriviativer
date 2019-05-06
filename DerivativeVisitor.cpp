@@ -33,6 +33,35 @@ void DerivativeVisitor::VisitAddHelper(T* n)
 	}
 }
 
+template<typename T, typename B>
+void DerivativeVisitor::VisitTimesHelper(T* n)
+{
+	// a'b + ab' = apb + abp
+	if (n != nullptr) {
+		auto derivative = std::make_shared<DerivativeVisitor>();
+		if (n->left.get() != nullptr && n->right.get() != nullptr) {
+			n->left->Accept(derivative.get());
+			AtomPtr ap = derivative.get()->get();
+			AtomPtr b = n->right;
+			n->right->Accept(derivative.get());
+			AtomPtr a = n->left;
+			AtomPtr bp = derivative.get()->get();
+			root = std::make_shared<B>(std::make_shared<Times>(ap, b), std::make_shared<Times>(a, bp));
+			return;
+		}
+		if (n->left.get() != nullptr) {
+			n->left->Accept(derivative.get());
+			root = derivative.get()->get();
+			return;
+		}
+		if (n->right.get() != nullptr) {
+			n->right->Accept(derivative.get());
+			root = derivative.get()->get();
+			return;
+		}
+	}
+}
+
 void DerivativeVisitor::VisitConst(Const* n)
 {
 	if(n != nullptr) root = std::make_shared<Const>(0);
@@ -55,34 +84,13 @@ void DerivativeVisitor::VisitMinus(Minus* n)
 
 void DerivativeVisitor::VisitTimes(Times* n)
 {
-	// a'b + ab' = apb + abp
-	if (n != nullptr) {
-		auto derivative = std::make_shared<DerivativeVisitor>();
-		if (n->left.get() != nullptr && n->right.get() != nullptr) {
-			n->left->Accept(derivative.get());
-			AtomPtr ap = derivative.get()->get();
-			AtomPtr b = n->right;
-			n->right->Accept(derivative.get());
-			AtomPtr a = n->left;
-			AtomPtr bp = derivative.get()->get();
-			root = std::make_shared<Add>(std::make_shared<Times>(ap,b), std::make_shared<Times>(a,bp));
-			return;
-		}
-		if (n->left.get() != nullptr) {
-			n->left->Accept(derivative.get());
-			root = derivative.get()->get();
-			return;
-		}
-		if (n->right.get() != nullptr) {
-			n->right->Accept(derivative.get());
-			root = derivative.get()->get();
-			return;
-		}
-	}
+	VisitTimesHelper<Times, Add>(n);
 }
 
 void DerivativeVisitor::VisitDivide(Divide* n)
 {
+	VisitTimesHelper<Divide, Minus>(n);
+	root = std::make_shared<Divide>(root, std::make_shared<Times>(n->right,n->right));
 }
 
 void DerivativeVisitor::VisitExp(Exp* n)

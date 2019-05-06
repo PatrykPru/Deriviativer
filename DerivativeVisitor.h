@@ -13,6 +13,8 @@ public:
 	AtomPtr root;
 	template <typename T>
 	void VisitAddHelper(T*);
+	template<typename T, typename B>
+	void VisitTimesHelper(T*);
 public:
 	DerivativeVisitor();
 	void VisitConst(Const*);

@@ -13,7 +13,11 @@ Atom::~Atom(){
 Const::Const(){
 	val = 1e-10;
 }
-Const::Const(double a)
+Const::Const(double a) : val(a)
+{
+
+}
+void Const::setValue(double a)
 {
 	val = a;
 }
@@ -39,10 +43,17 @@ X::~X(){
 Add::Add(){
 	
 }
-Add::Add(AtomPtr& a, AtomPtr& b)
+Add::Add(const AtomPtr& a, const AtomPtr& b) : left(a) , right(b)
+{
+
+}
+void Add::setLeft(const AtomPtr& a)
 {
 	left = a;
-	right = b;
+}
+void Add::setRight(const AtomPtr& a)
+{
+	right = a;
 }
 void Add::Accept(Visitor* v){
 	v->VisitAdd(this);
@@ -55,10 +66,17 @@ Add::~Add(){
 Minus::Minus(){
 	
 }
-Minus::Minus(AtomPtr& a, AtomPtr& b)
+Minus::Minus(const AtomPtr& a, const AtomPtr& b) : left(a), right(b)
+{
+
+}
+void Minus::setLeft(const AtomPtr& a)
 {
 	left = a;
-	right = b;
+}
+void Minus::setRight(const AtomPtr& a)
+{
+	right = a;
 }
 void Minus::Accept(Visitor* v){
 	v->VisitMinus(this);
@@ -71,10 +89,17 @@ Minus::~Minus(){
 Times::Times(){
 	
 }
-Times::Times(AtomPtr& a, AtomPtr& b)
+Times::Times(const AtomPtr& a, const  AtomPtr& b) : left(a), right(b)
+{
+
+}
+void Times::setLeft(const AtomPtr& a)
 {
 	left = a;
-	right = b;
+}
+void Times::setRight(const AtomPtr& a)
+{
+	right = a;
 }
 void Times::Accept(Visitor* v){
 	v->VisitTimes(this);
@@ -83,14 +108,20 @@ Times::~Times(){
 	
 }
 
-	// Divide
+// Divide
 Divide::Divide(){
 
 }
-Divide::Divide(AtomPtr& a, AtomPtr& b)
+Divide::Divide(const AtomPtr& a, const AtomPtr& b) : left(a), right(b)
+{
+}
+void Divide::setLeft(const AtomPtr& a)
 {
 	left = a;
-	right = b;
+}
+void Divide::setRight(const AtomPtr&a)
+{
+	right = a;
 }
 void Divide::Accept(Visitor* v){
 	v->VisitDivide(this);
@@ -99,14 +130,21 @@ Divide::~Divide(){
 	
 }
 
-	// Exp
+// Exp
 Exp::Exp(){
 	
 }
-Exp::Exp(AtomPtr& a, AtomPtr& b)
+Exp::Exp(const AtomPtr& a, const AtomPtr& b) : base(a) , power(b)
+{
+
+}
+void Exp::setBase(const AtomPtr& a)
 {
 	base = a;
-	power = b;
+}
+void Exp::setPower(const AtomPtr& a)
+{
+	power = a;
 }
 void Exp::Accept(Visitor* v){
 	v->VisitExp(this);

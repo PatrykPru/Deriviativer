@@ -15,12 +15,12 @@ class Visitor
 public:
 	Visitor();
 	virtual void VisitConst(Const*) = 0;
-	virtual void VisitX(X* n) = 0;
-	virtual void VisitAdd(Add* n) = 0;
-	virtual void VisitMinus(Minus* n) = 0;
-	virtual void VisitTimes(Times* n) = 0;
-	virtual void VisitDivide(Divide* n) = 0;
-	virtual void VisitExp(Exp* n) = 0;
-	~Visitor();
+	virtual void VisitX(X*) = 0;
+	virtual void VisitAdd(Add*) = 0;
+	virtual void VisitMinus(Minus*) = 0;
+	virtual void VisitTimes(Times*) = 0;
+	virtual void VisitDivide(Divide*) = 0;
+	virtual void VisitExp(Exp*) = 0;
+	virtual ~Visitor();
 };
 

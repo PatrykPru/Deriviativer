@@ -123,11 +123,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InfixPrinterVisitor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InfixPrinterVisitor.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Visitor.h" />
   </ItemGroup>

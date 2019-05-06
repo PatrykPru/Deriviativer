@@ -14,7 +14,8 @@ class Atom {
 };
 
 class Const : public Atom {
-	protected:
+	public:
+		bool isFraction;
 		double val;
 	public:
 		Const();
@@ -32,66 +33,66 @@ class X : public Atom {
 };
 
 class Add : public Atom {
-	protected:
+	public:
 		AtomPtr left;
 		AtomPtr right;
 	public:
 		Add();
-		Add(AtomPtr&, AtomPtr&);
-		setLeft(AtomPtr&);
-		setRight(AtomPtr&);
+		Add(const AtomPtr&, const  AtomPtr&);
+		void setLeft(const AtomPtr&);
+		void setRight(const AtomPtr&);
 		void Accept(Visitor*);
 		~Add();
 };
 
 class Minus : public Atom {
-	protected:
+	public:
 		AtomPtr left;
 		AtomPtr right;
 	public:
 		Minus();
-		Minus(AtomPtr&, AtomPtr&);
-		setLeft(AtomPtr&);
-		setRight(AtomPtr&);
+		Minus(const AtomPtr&, const  AtomPtr&);
+		void setLeft(const AtomPtr&);
+		void setRight(const AtomPtr&);
 		void Accept(Visitor*);
 		~Minus();
 };
 
 class Times : public Atom {
-	protected:
+	public:
 		AtomPtr left;
 		AtomPtr right;
 	public:
 		Times();
-		Times(AtomPtr&, AtomPtr&);
-		setLeft(AtomPtr&);
-		setRight(AtomPtr&);
+		Times(const AtomPtr&, const AtomPtr&);
+		void setLeft(const AtomPtr&);
+		void setRight(const AtomPtr&);
 		void Accept(Visitor*);
 		~Times();
 };
 
 class Divide : public Atom {
-	protected:
+	public:
 		AtomPtr left;
 		AtomPtr right;
 	public:
 		Divide();
-		Divide(AtomPtr&, AtomPtr&);
-		setLeft(AtomPtr&);
-		setRight(AtomPtr&);
+		Divide(const AtomPtr&, const AtomPtr&);
+		void setLeft(const AtomPtr&);
+		void setRight(const AtomPtr&);
 		void Accept(Visitor*);
 		~Divide();
 };
 
 class Exp : public Atom {
-	protected:
+	public:
 		AtomPtr base;
 		AtomPtr power;
 	public:
 		Exp();
-		Exp(AtomPtr&, AtomPtr&);
-		setBase(AtomPtr&);
-		setPower(AtomPtr&);
+		Exp(const AtomPtr&, const  AtomPtr&);
+		void setBase(const AtomPtr&);
+		void setPower(const AtomPtr&);
 		void Accept(Visitor*);
 		~Exp();
 };

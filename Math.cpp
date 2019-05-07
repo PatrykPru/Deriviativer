@@ -21,6 +21,10 @@ void Const::setValue(double a)
 {
 	val = a;
 }
+double Const::eq(double a)
+{
+	return val;
+}
 void Const::Accept(Visitor* v){
 	v->VisitConst(this);
 }
@@ -31,6 +35,10 @@ Const::~Const(){
 // X
 X::X(){
 
+}
+double X::eq(double a)
+{
+	return a;
 }
 void X::Accept(Visitor* v){
 	v->VisitX(this);
@@ -55,6 +63,19 @@ void Add::setRight(const AtomPtr& a)
 {
 	right = a;
 }
+double Add::eq(double a)
+{
+	if (left.get() != nullptr && right.get() != nullptr) {
+		return left.get()->eq(a) + right.get()->eq(a);
+	}
+	if (left.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	if (right.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	return 0.0;
+}
 void Add::Accept(Visitor* v){
 	v->VisitAdd(this);
 }
@@ -77,6 +98,19 @@ void Minus::setLeft(const AtomPtr& a)
 void Minus::setRight(const AtomPtr& a)
 {
 	right = a;
+}
+double Minus::eq(double a)
+{
+	if (left.get() != nullptr && right.get() != nullptr) {
+		return left.get()->eq(a) - right.get()->eq(a);
+	}
+	if (left.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	if (right.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	return 0.0;
 }
 void Minus::Accept(Visitor* v){
 	v->VisitMinus(this);
@@ -101,6 +135,19 @@ void Times::setRight(const AtomPtr& a)
 {
 	right = a;
 }
+double Times::eq(double a)
+{
+	if (left.get() != nullptr && right.get() != nullptr) {
+		return left.get()->eq(a) * right.get()->eq(a);
+	}
+	if (left.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	if (right.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	return 0.0;
+}
 void Times::Accept(Visitor* v){
 	v->VisitTimes(this);
 }
@@ -123,6 +170,19 @@ void Divide::setRight(const AtomPtr&a)
 {
 	right = a;
 }
+double Divide::eq(double a)
+{
+	if (left.get() != nullptr && right.get() != nullptr) {
+		return left.get()->eq(a) / right.get()->eq(a);
+	}
+	if (left.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	if (right.get() != nullptr) {
+		return left.get()->eq(a);
+	}
+	return 0.0;
+}
 void Divide::Accept(Visitor* v){
 	v->VisitDivide(this);
 }
@@ -134,7 +194,7 @@ Divide::~Divide(){
 Exp::Exp(){
 	
 }
-Exp::Exp(const AtomPtr& a, const AtomPtr& b) : base(a) , power(b)
+Exp::Exp(const AtomPtr& a, const ConstPtr& b) : base(a) , power(b)
 {
 
 }
@@ -142,9 +202,13 @@ void Exp::setBase(const AtomPtr& a)
 {
 	base = a;
 }
-void Exp::setPower(const AtomPtr& a)
+void Exp::setPower(const ConstPtr& a)
 {
 	power = a;
+}
+double Exp::eq(double a)
+{
+	return std::pow(base->eq(a), power->eq(a));
 }
 void Exp::Accept(Visitor* v){
 	v->VisitExp(this);

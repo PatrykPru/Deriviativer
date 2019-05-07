@@ -5,10 +5,12 @@
 class Atom;
 
 typedef std::shared_ptr<Atom> AtomPtr;
+typedef std::shared_ptr<Const> ConstPtr;
 
 class Atom {
 	public:
 		Atom();
+		virtual double eq(double) = 0;
 		virtual void Accept(Visitor* ) = 0;
 		virtual ~Atom();
 };
@@ -21,6 +23,7 @@ class Const : public Atom {
 		Const();
 		Const(double);
 		void setValue(double);
+		double eq(double);
 		void Accept(Visitor*);
 		~Const();
 };
@@ -28,6 +31,7 @@ class Const : public Atom {
 class X : public Atom {
 	public:
 		X();
+		double eq(double);
 		void Accept(Visitor*);
 		~X();
 };
@@ -41,6 +45,7 @@ class Add : public Atom {
 		Add(const AtomPtr&, const  AtomPtr&);
 		void setLeft(const AtomPtr&);
 		void setRight(const AtomPtr&);
+		double eq(double a);
 		void Accept(Visitor*);
 		~Add();
 };
@@ -54,6 +59,7 @@ class Minus : public Atom {
 		Minus(const AtomPtr&, const  AtomPtr&);
 		void setLeft(const AtomPtr&);
 		void setRight(const AtomPtr&);
+		double eq(double);
 		void Accept(Visitor*);
 		~Minus();
 };
@@ -67,6 +73,7 @@ class Times : public Atom {
 		Times(const AtomPtr&, const AtomPtr&);
 		void setLeft(const AtomPtr&);
 		void setRight(const AtomPtr&);
+		double eq(double);
 		void Accept(Visitor*);
 		~Times();
 };
@@ -80,6 +87,7 @@ class Divide : public Atom {
 		Divide(const AtomPtr&, const AtomPtr&);
 		void setLeft(const AtomPtr&);
 		void setRight(const AtomPtr&);
+		double eq(double);
 		void Accept(Visitor*);
 		~Divide();
 };
@@ -87,12 +95,13 @@ class Divide : public Atom {
 class Exp : public Atom {
 	public:
 		AtomPtr base;
-		AtomPtr power;
+		ConstPtr power;
 	public:
 		Exp();
-		Exp(const AtomPtr&, const  AtomPtr&);
+		Exp(const AtomPtr&, const ConstPtr&);
 		void setBase(const AtomPtr&);
-		void setPower(const AtomPtr&);
+		void setPower(const ConstPtr&); // Only Const Value
+		double eq(double);
 		void Accept(Visitor*);
 		~Exp();
 };

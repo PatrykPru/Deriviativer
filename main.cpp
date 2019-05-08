@@ -11,47 +11,48 @@ typedef DerivativeVisitor Derivativer;
 
 class MathContainer {
 protected:
-	AtomPtr tree, last;
+	AtomPtr expr, last;
 	std::shared_ptr<Printer> printer;
 	std::shared_ptr<Derivativer> derivativer;
 public:
 	MathContainer() : printer(std::make_shared<Printer>()) , derivativer(std::make_shared<Derivativer>()) {
 	
 	}
-	void setTree(AtomPtr t) {
-		tree = t;
+	void setExpr(AtomPtr t) {
+		expr = t;
 	}
-	AtomPtr getTree() {
-		return tree;
+	Atom* getExpr() {
+		return expr.get();
 	}
-	AtomPtr derivate() {
-		last = tree;
-		tree.get()->Accept(derivativer.get());
-		tree = derivativer.get()->get();
-		return tree;
+	Atom* derivate() {
+		last = expr;
+		expr.get()->Accept(derivativer.get());
+		expr = derivativer.get()->get();
+		return expr.get();
 	}
 	void print() {
-		tree.get()->Accept(printer.get());
+		expr.get()->Accept(printer.get());
 		std::cout << printer.get()->get() << std::endl;
 	}
 	void reset() {
-		tree.reset();
-		tree = last;
+		expr.reset();
+		expr = last;
 		last.reset();
 	}
 };
 
 int main() {
 	
-	AtomPtr root = std::make_shared<Times>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
-	//AtomPtr root = std::make_shared <Exp>(std::make_shared<X>(), std::make_shared<Const>(5));
+	AtomPtr expr = std::make_shared<Times>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
 	MathContainer mtc;
 
-	mtc.setTree(root);
-	std::cout << mtc.getTree().get()->eq(2) << std::endl;
+	mtc.setExpr(expr);
 	mtc.print();
-	std::cout << mtc.derivate().get()->eq(2) << std::endl;
+	std::cout << " f(1) = " << mtc.getExpr()->eq(1) << std::endl;
+	mtc.derivate();
 	mtc.print();
+	std::cout << " f(1) = " << mtc.getExpr()->eq(1) << std::endl;
+	
 
 	return 0;
 }

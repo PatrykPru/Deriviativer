@@ -1,6 +1,6 @@
 # Derivative 3.0
 
-### To make a driffrent matematical function you need to create one of the inteligent pointer:
+### To make a driffrent matematical function you need to create one of the smart pointers:
 + To create a Math **Constant** with number inside brackets
 ```cpp
 std::make_shared <Const>(1);
@@ -27,13 +27,14 @@ std::make_shared <Divide>(std::make_shared<X>(), std::make_shared<X> ());
 ```
 + To create a Math **Exponential** 
 ```cpp
-std::make_shared <Divide>(std::make_shared<X>(), std::make_shared<X> ());
+std::make_shared <Exp>(std::make_shared<X>(), std::make_shared<Const> (2));
 ```
 
 
 #### If you want to get a derivatived function you have to use a special Math Container which simplify usage of objects.
 ```cpp
-AtomPtr root = std::make_shared<Times>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
+AtomPtr root = std::make_shared<Times>(std::make_shared <Times>(std::make_shared<X>(), 
+std::make_shared<X>()), std::make_shared<X>());
 	
 MathContainer mtc;
 mtc.setTree(root);

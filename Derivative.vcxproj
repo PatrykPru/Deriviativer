@@ -127,12 +127,14 @@
     <ClCompile Include="InfixPrinterVisitor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Visitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DerivativeVisitor.h" />
     <ClInclude Include="InfixPrinterVisitor.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>

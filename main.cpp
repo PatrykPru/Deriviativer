@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Math.h"
+#include "Parser.h"
 #include "Visitor.h"
 #include "InfixPrinterVisitor.h"
 #include "DerivativeVisitor.h"
@@ -41,9 +42,16 @@ public:
 	}
 };
 
+
+
 int main() {
 	
-	AtomPtr expr = std::make_shared<Times>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
+	Parser p;
+	p.convertFromRPN("5      2           x*          +*");
+	AtomPtr expr = p.getExpr();
+	
+	system("pause");
+	AtomPtr expr2 = std::make_shared<Add>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
 	MathContainer mtc;
 
 	mtc.setExpr(expr);

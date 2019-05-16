@@ -194,7 +194,7 @@ Divide::~Divide(){
 Exp::Exp(){
 	
 }
-Exp::Exp(const AtomPtr& a, const ConstPtr& b) : base(a) , power(b)
+Exp::Exp(const AtomPtr& a, const AtomPtr& b) : base(a) , power(b)
 {
 
 }
@@ -202,7 +202,7 @@ void Exp::setBase(const AtomPtr& a)
 {
 	base = a;
 }
-void Exp::setPower(const ConstPtr& a)
+void Exp::setPower(const AtomPtr& a)
 {
 	power = a;
 }

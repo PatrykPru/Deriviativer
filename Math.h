@@ -95,12 +95,12 @@ class Divide : public Atom {
 class Exp : public Atom {
 	public:
 		AtomPtr base;
-		ConstPtr power;
+		AtomPtr power;
 	public:
 		Exp();
-		Exp(const AtomPtr&, const ConstPtr&);
+		Exp(const AtomPtr&, const AtomPtr&);
 		void setBase(const AtomPtr&);
-		void setPower(const ConstPtr&); // Only Const Value
+		void setPower(const AtomPtr&); // Only Const Value
 		double eq(double);
 		void Accept(Visitor*);
 		~Exp();

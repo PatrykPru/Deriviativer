@@ -95,9 +95,8 @@ void DerivativeVisitor::VisitDivide(Divide* n)
 
 void DerivativeVisitor::VisitExp(Exp* n)
 {
-	auto number = std::make_shared<Const>(n->power->val);
-	auto poly = std::make_shared<Exp>(std::make_shared<X>(), std::make_shared<Const>(n->power->val - 1));
-	root = std::make_shared<Times>(number, poly);
+	auto poly = std::make_shared<Exp>(std::make_shared<X>(), std::make_shared<Add>(n->power, std::make_shared<Const>(-1)));
+	root = std::make_shared<Times>(n->power, poly);
 }
 
 

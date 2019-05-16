@@ -45,14 +45,16 @@ public:
 
 
 int main() {
-	
-	Parser p;
-	p.convertFromRPN("5      2           x*          +*");
-	AtomPtr expr = p.getExpr();
-	
-	system("pause");
-	AtomPtr expr2 = std::make_shared<Add>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
+
 	MathContainer mtc;
+	Parser p;
+
+	p.convertFromRPN("5x2^+");
+	std::cout << "===============" << std::endl;
+	p.convertFromInfix("(5 + x + 2*x)/(5*5) - 55 + 28.32 * x / x");
+	std::cout << "===============" << std::endl;
+	AtomPtr expr = p.getExpr();
+	AtomPtr expr2 = std::make_shared<Add>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());
 
 	mtc.setExpr(expr);
 	mtc.print();
@@ -60,7 +62,6 @@ int main() {
 	mtc.derivate();
 	mtc.print();
 	std::cout << " f(1) = " << mtc.getExpr()->eq(1) << std::endl;
-	
 
 	return 0;
 }

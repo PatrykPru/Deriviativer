@@ -51,7 +51,8 @@ int main() {
 
 	p.convertFromRPN("5x2^+");
 	std::cout << "===============" << std::endl;
-	p.convertFromInfix("(5 + x + 2*x)/(5*5) - 55 + 28.32 * x / x");
+	//p.convertFromInfix("(5 + x + 2*x)/(5*5) - 55 + 28.32 * x / x ^ 2");
+	p.convertFromInfix("x^5 + 6*x^7 + 8*x + 9");
 	std::cout << "===============" << std::endl;
 	AtomPtr expr = p.getExpr();
 	AtomPtr expr2 = std::make_shared<Add>(std::make_shared <Times>(std::make_shared<X>(), std::make_shared<X>()), std::make_shared<X>());

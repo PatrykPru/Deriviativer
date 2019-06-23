@@ -1,5 +1,7 @@
 # Derivative 3.0
 
+Project was created for programing class at Warsaw University of Technology.
+
 ### To make a driffrent matematical function you need to create one of the smart pointers:
 + To create a Math **Constant** with number inside brackets
 ```cpp
